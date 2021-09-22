@@ -3,10 +3,10 @@
 const 
 	express = require('express'),
 	app = express(),
-	tournamentService = require('./services/tournaments');
+	matchesServices = require('./controllers/matches');
 
 app.get('/', async (req, res) => {
-	const response = await tournamentService.getTournamentIdList();
+	const response = await matchesServices.getMatchesFromDataServer(req, res);
 	console.log(response.data);
 })
 
