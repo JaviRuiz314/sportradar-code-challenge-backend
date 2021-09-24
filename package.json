@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "test"
+    "test": "jest --config ./jest.config.json"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +14,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^27.2.1"
   }
 }

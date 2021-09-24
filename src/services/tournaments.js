@@ -1,12 +1,14 @@
 'use strict';
 
 const
+	_ = require('lodash'),
 	axios = require('axios'),
-	_ = require('lodash');
+	utils = require('../shared/utils');
+	
 
 async function getTournamentsList() {
 	const
-		tournamentInfo = await axios.get('https://cp.fn.sportradar.com/common/en/Etc:UTC/gismo/config_tournaments/1/17'),
+		tournamentInfo = await axios.get(utils.TOURNAMENTS_LINK),
 		apiData = _.get(tournamentInfo, 'data.doc');
 
 	return _.get(apiData[0], 'data.tournaments');
@@ -24,6 +26,5 @@ async function getTournamentInfoList() {
 }
 
 module.exports = {
-	getTournamentsList,
 	getTournamentInfoList
 }
