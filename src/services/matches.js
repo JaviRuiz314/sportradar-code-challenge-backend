@@ -27,8 +27,15 @@ function parseTimeAndDateOfMatches(matchList) {
 			timeParts = match.time.time.split(':').join('');
 		return {
 			time: match.time,
-			teams: match.teams,
-			score: match.result,
+			teams: {
+				away: match.teams.away.name,
+				home: match.teams.home.name
+			},
+			score: {
+				away: match.result.away,
+				home: match.result.home,
+				winner: match.result.winner
+			},
 			events: match.comment,
 			numberDate: +dateParts,
 			numberTime: +timeParts
