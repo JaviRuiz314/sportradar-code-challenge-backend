@@ -4,6 +4,7 @@ const
 	_ = require('lodash'),
 	axios = require('axios'),
 	tournamentService = require('../services/tournaments'),
+	utilsService = require('../services/utils'),
 	utils = require('../shared/utils');
 
 async function getMatchesByTournamentId(tournamentsInfoList = []) {
@@ -22,11 +23,11 @@ async function getMatchesByTournamentId(tournamentsInfoList = []) {
 
 function parseTimeAndDateOfMatches(matchList) {
 	return matchList.map(match => {
-		const
-			dateParts = match.time.date.split('/').reverse().join(''),
-			timeParts = match.time.time.split(':').join('');
 		return {
-			time: match.time,
+			time: {
+				time: match.time.time,
+				date: match.time.date
+			},
 			teams: {
 				away: match.teams.away.name,
 				home: match.teams.home.name
@@ -36,40 +37,20 @@ function parseTimeAndDateOfMatches(matchList) {
 				home: match.result.home,
 				winner: match.result.winner
 			},
-			events: match.comment,
-			numberDate: +dateParts,
-			numberTime: +timeParts
+			events: match.comment
 		}
 	});
 }
 
-function compareDates(firstElement, secondElement) {
-	if (firstElement.date === secondElement.date) {
-		return firstElement.time - secondElement.time;
-	}
-	return firstElement.date - secondElement.date;
-}
-
 function orderMatchesByCriteria(matchList, order, limit) {
 	const
-		listedParsed = parseTimeAndDateOfMatches(matchList),
-		sortedData = listedParsed.slice().sort((a, b) => {
-			if (order === utils.ORDER_ASC) {
-				return compareDates(
-					{ date: a.numberDate, time: a.numberTime },
-					{ date: b.numberDate, time: b.numberTime }
-				);
-			}
-			return compareDates(
-				{ date: b.numberDate, time: b.numberTime },
-				{ date: a.numberDate, time: a.numberTime }
-			);
-		});
+		sortedData = utilsService.sortCollectionWithMergeAlgorithm(matchList, 'time.uts', order),
+		parsedAndsortedList = parseTimeAndDateOfMatches(sortedData.slice(0, limit));
 
-	return sortedData.slice(0, limit);
+	return parsedAndsortedList;
 };
 
-async function getMatchesListOrdered(order = 'DESC', limit = 5) {
+async function getMatchesListOrdered(order = utils.ORDER_DESC, limit = 5) {
 	const
 		tournamentsInfoList = await tournamentService.getTournamentInfoList(),
 		matchesListFromDataServer = await getMatchesByTournamentId(tournamentsInfoList),
