@@ -6,15 +6,15 @@ const
 	tournamentService = require('../services/tournaments'),
 	utils = require('../shared/utils');
 
-async function getMatchesByTournamentId(tournamentsIdList = []) {
-	const matchesData = [];
+async function getMatchesByTournamentId(tournamentsInfoList = []) {
+	let matchesData = {};
 
-	await Promise.all(tournamentsIdList.slice(0).map(async (tournamentId) => {
+	await Promise.all(tournamentsInfoList.slice(0).map(async (tournament) => {
 		const
-			matchListInfo = await axios.get(utils.MATCHES_LINK(tournamentId)),
+			matchListInfo = await axios.get(utils.MATCHES_LINK(tournament.id)),
 			apiData = _.get(matchListInfo, 'data.doc');
 
-		apiData.length && matchesData.push(_.get(apiData[0], 'data.matches'));
+		if (apiData.length) matchesData[tournament.name] = _.get(apiData[0], 'data.matches');
 	}));
 
 	return matchesData;
@@ -27,8 +27,15 @@ function parseTimeAndDateOfMatches(matchList) {
 			timeParts = match.time.time.split(':').join('');
 		return {
 			time: match.time,
-			teams: match.teams,
-			score: match.result,
+			teams: {
+				away: match.teams.away.name,
+				home: match.teams.home.name
+			},
+			score: {
+				away: match.result.away,
+				home: match.result.home,
+				winner: match.result.winner
+			},
 			events: match.comment,
 			numberDate: +dateParts,
 			numberTime: +timeParts
@@ -54,7 +61,7 @@ function orderMatchesByCriteria(matchList, order, limit) {
 				);
 			}
 			return compareDates(
-				{ date: b.numberDate, time: b.numberTime }, 
+				{ date: b.numberDate, time: b.numberTime },
 				{ date: a.numberDate, time: a.numberTime }
 			);
 		});
@@ -64,10 +71,15 @@ function orderMatchesByCriteria(matchList, order, limit) {
 
 async function getMatchesListOrdered(order = 'DESC', limit = 5) {
 	const
-		tournamentsIdList = await tournamentService.getTournamentIdList(),
-		matchesListFromDataServer = await getMatchesByTournamentId(tournamentsIdList);
+		tournamentsInfoList = await tournamentService.getTournamentInfoList(),
+		matchesListFromDataServer = await getMatchesByTournamentId(tournamentsInfoList),
+		orderedMatchesByTournament = {};
 
-	return matchesListFromDataServer.map(matchesByTournament => orderMatchesByCriteria(Object.values(matchesByTournament), order, limit));
+	Object.keys(matchesListFromDataServer).forEach(tournament => {
+		orderedMatchesByTournament[tournament] = orderMatchesByCriteria(Object.values(matchesListFromDataServer[tournament]), order, limit);
+	})
+
+	return orderedMatchesByTournament;
 }
 
 module.exports = { getMatchesListOrdered }

@@ -14,11 +14,17 @@ async function getTournamentsList() {
 	return _.get(apiData[0], 'data.tournaments');
 }
 
-async function getTournamentIdList() {
-	const tournamentList = await getTournamentsList(); 
-	return tournamentList.map(tournament => tournament._tid);
+async function getTournamentInfoList() {
+	const tournamentList = await getTournamentsList();
+	return tournamentList.map(tournament => {
+		return {
+			id: tournament._tid,
+			name: tournament.name,
+			seasonType: tournament.seasontypename
+		}
+	});
 }
 
 module.exports = {
-	getTournamentIdList
+	getTournamentInfoList
 }
