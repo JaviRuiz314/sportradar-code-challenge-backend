@@ -1,6 +1,6 @@
 'use strict';
 
-const matchesService = require('../services/matches');
+const matchesService = require('#services/matchesService');
 
 async function getMatchesFromDataServer(req, res) {
 	try {

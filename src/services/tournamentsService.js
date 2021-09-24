@@ -3,7 +3,7 @@
 const
 	_ = require('lodash'),
 	axios = require('axios'),
-	utils = require('../shared/utils');
+	utils = require('#shared/utils');
 	
 
 async function getTournamentsList() {

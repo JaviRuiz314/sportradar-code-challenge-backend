@@ -1,6 +1,7 @@
 'use strict';
 
-const app = require('./server');
+require('module-alias/register');
+const app = require('#server');
 require('dotenv').config();
 
 app.listen(process.env.PORT, async () => {
