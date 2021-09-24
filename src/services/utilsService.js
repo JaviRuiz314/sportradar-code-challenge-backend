@@ -2,7 +2,7 @@
 
 const
 	_ = require('lodash'),
-	utils = require('../shared/utils');
+	utils = require('#shared/utils');
 
 function mergeCollection(a, b, fieldToSort, order) {
 	const

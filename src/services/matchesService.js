@@ -3,9 +3,9 @@
 const
 	_ = require('lodash'),
 	axios = require('axios'),
-	tournamentService = require('../services/tournaments'),
-	utilsService = require('../services/utils'),
-	utils = require('../shared/utils');
+	tournamentService = require('#services/tournamentsService'),
+	utilsService = require('#services/utilsService'),
+	utils = require('#shared/utils');
 
 async function getMatchesByTournamentId(tournamentsInfoList = []) {
 	let matchesData = {};

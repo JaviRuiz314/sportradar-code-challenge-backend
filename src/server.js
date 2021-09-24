@@ -3,7 +3,7 @@
 const 
 	express = require('express'),
 	app = express(),
-	matchesController = require('./controllers/matches');
+	matchesController = require('#controllers/matchesController');
 
 app.get('/', async (req, res) => {
 	const response = await matchesController.getMatchesFromDataServer(req, res);
