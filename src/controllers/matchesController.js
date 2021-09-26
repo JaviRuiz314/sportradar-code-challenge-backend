@@ -1,10 +1,10 @@
 'use strict';
 
-const matchesService = require('#services/matchesService');
+const services = require('#services');
 
 async function getMatchesFromDataServer(req, res) {
 	try {
-		const matchesList = await matchesService.getMatchesListOrdered();
+		const matchesList = await services.Matches.getMatchesListOrdered();
 		res.status(200).send(matchesList);
 	} catch (error) {
 		console.log(`***getMatchesFromDataServer unexpected error: ${error}. Stack: ${error.stack}`);
