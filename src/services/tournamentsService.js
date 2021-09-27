@@ -19,8 +19,7 @@ async function getTournamentInfoList() {
 	return tournamentList.map(tournament => {
 		return {
 			id: tournament._tid,
-			name: tournament.name,
-			seasonType: tournament.seasontypename
+			name: tournament.name
 		}
 	});
 }

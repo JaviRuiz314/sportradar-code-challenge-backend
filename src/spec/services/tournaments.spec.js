@@ -1,6 +1,6 @@
 'use strict';
 const
-	utils = require('../../shared/utils'),
+	utils = require('#shared/utils'),
 	mocks = {};
 
 describe('services tournaments', () => {
@@ -12,13 +12,13 @@ describe('services tournaments', () => {
 		});
 
 		mocks.axios = require('axios');
-		mocks.tournamentsService = require('../../services/tournaments');
+		mocks.service = require('#services');
 	});
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
 
-	describe('getTournamentIdList', () => {
+	describe('getTournamentInfoList', () => {
 		it('should call the correct methods to retrieve the data of the tournaments', async () => {
 			// GIVEN
 			const
@@ -41,12 +41,19 @@ describe('services tournaments', () => {
 						}]
 					}
 				},
-				parsedResponse = [1, 2];
+				parsedResponse = [
+					{
+					id: 1,
+					name: 'tournament_1'
+				}, {
+					id: 2,
+					name: 'tournament_2'
+				}]
 
 			mocks.axios.get.mockResolvedValue(httpResponse);
 
 			// WHEN
-			const tournamentIdList = await mocks.tournamentsService.getTournamentIdList();
+			const tournamentIdList = await mocks.service.Tournaments.getTournamentInfoList();
 
 			// THEN
 			expect(mocks.axios.get).toHaveBeenCalledTimes(1);
@@ -60,7 +67,7 @@ describe('services tournaments', () => {
 			mocks.axios.get.mockRejectedValue(error);
 
 			// WHEN
-			await expect(mocks.tournamentsService.getTournamentIdList()).rejects.toThrowError(error);
+			await expect(mocks.service.Tournaments.getTournamentInfoList()).rejects.toThrowError(error);
 
 			// THEN
 			expect(mocks.axios.get).toHaveBeenCalledTimes(1);

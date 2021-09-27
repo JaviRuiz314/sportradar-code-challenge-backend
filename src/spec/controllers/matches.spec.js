@@ -8,14 +8,14 @@ let
 
 describe('controller matches', () => {
 	beforeEach(() => {
-		jest.mock('../../services/matches', () => {
+		jest.mock('#services/matchesService', () => {
 			return {
-				getMatchesListOrdered: jest.fn()
+					getMatchesListOrdered: jest.fn()
 			}
 		});
 
-		mocks.matchesService = require('../../services/matches');
-		mocks.matchesController = require('../../controllers/matches');
+		mocks.matchesService = require('#services/matchesService');
+		mocks.matchesController = require('#controllers/matchesController');
 
 		send = jest.fn();
 		res = { status: jest.fn().mockReturnValue({ send }) };
