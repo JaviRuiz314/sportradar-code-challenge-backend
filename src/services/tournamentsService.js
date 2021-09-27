@@ -2,13 +2,13 @@
 
 const
 	_ = require('lodash'),
-	axios = require('axios'),
+	httpRequestService = require('#services/httpRequestService'),
 	utils = require('#shared/utils');
 	
 
 async function getTournamentsList() {
 	const
-		tournamentInfo = await axios.get(utils.TOURNAMENTS_LINK),
+		tournamentInfo = await httpRequestService.createAHTTPRequest('get', utils.TOURNAMENTS_LINK),
 		apiData = _.get(tournamentInfo, 'data.doc');
 
 	return _.get(apiData[0], 'data.tournaments');

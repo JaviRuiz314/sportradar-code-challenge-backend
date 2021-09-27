@@ -2,7 +2,7 @@
 
 const
 	_ = require('lodash'),
-	axios = require('axios'),
+	httpRequestService = require('#services/httpRequestService'),
 	tournamentService = require('#services/tournamentsService'),
 	utilsService = require('#services/utilsService'),
 	utils = require('#shared/utils');
@@ -12,7 +12,7 @@ async function getMatchesByTournamentId(tournamentsInfoList = []) {
 
 	await Promise.all(tournamentsInfoList.slice(0).map(async (tournament) => {
 		const
-			matchListInfo = await axios.get(utils.MATCHES_LINK(tournament.id)),
+			matchListInfo = await httpRequestService.createAHTTPRequest('get', utils.MATCHES_LINK(tournament.id)),
 			apiData = _.get(matchListInfo, 'data.doc');
 
 		if (apiData.length) matchesData[tournament.name] = _.get(apiData[0], 'data.matches');
