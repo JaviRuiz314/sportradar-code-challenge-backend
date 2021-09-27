@@ -6,9 +6,9 @@ const
 
 describe('service matches', () => {
 	beforeEach(() => {
-		jest.mock('axios', () => {
+		jest.mock('#services/httpRequestService', () => {
 			return {
-				get: jest.fn()
+				createHTTPRequest: jest.fn()
 			}
 		});
 		jest.mock('#services/utilsService', () => {
@@ -21,7 +21,7 @@ describe('service matches', () => {
 				getTournamentInfoList: jest.fn()
 			}
 		});
-		mocks.axios = require('axios');
+		mocks.httpRequestService = require('#services/httpRequestService');
 		mocks.tournamentsService = require('#services/tournamentsService');
 		mocks.utilsService = require('#services/utilsService');
 		mocks.matchesService = require('#services/matchesService');
@@ -101,9 +101,9 @@ describe('service matches', () => {
 				};
 
 			mocks.tournamentsService.getTournamentInfoList.mockResolvedValue(tournamentInfo);
-			mocks.axios.get.mockResolvedValueOnce(httpResulsList[0]);
-			mocks.axios.get.mockResolvedValueOnce(httpResulsList[1]);
-			mocks.axios.get.mockResolvedValueOnce(httpResulsList[2]);
+			mocks.httpRequestService.createHTTPRequest.mockResolvedValueOnce(httpResulsList[0]);
+			mocks.httpRequestService.createHTTPRequest.mockResolvedValueOnce(httpResulsList[1]);
+			mocks.httpRequestService.createHTTPRequest.mockResolvedValueOnce(httpResulsList[2]);
 			mocks.utilsService.sortCollectionWithMergeAlgorithm.mockReturnValueOnce(matchListByTournament['tournament_1']);
 			mocks.utilsService.sortCollectionWithMergeAlgorithm.mockReturnValueOnce(matchListByTournament['tournament_2']);
 			mocks.utilsService.sortCollectionWithMergeAlgorithm.mockReturnValueOnce(matchListByTournament['tournament_3']);
@@ -113,10 +113,10 @@ describe('service matches', () => {
 			// THEN
 			expect(mocks.tournamentsService.getTournamentInfoList).toHaveBeenCalledTimes(1);
 			expect(mocks.tournamentsService.getTournamentInfoList).toHaveBeenCalledWith();
-			expect(mocks.axios.get).toHaveBeenCalledTimes(3);
-			expect(mocks.axios.get).toHaveBeenNthCalledWith(1, utils.MATCHES_LINK(1));
-			expect(mocks.axios.get).toHaveBeenNthCalledWith(2, utils.MATCHES_LINK(2));
-			expect(mocks.axios.get).toHaveBeenNthCalledWith(3, utils.MATCHES_LINK(3));
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenCalledTimes(3);
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenNthCalledWith(1, utils.GET_HTTP_METHOD, utils.MATCHES_LINK(1));
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenNthCalledWith(2, utils.GET_HTTP_METHOD, utils.MATCHES_LINK(2));
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenNthCalledWith(3, utils.GET_HTTP_METHOD, utils.MATCHES_LINK(3));
 			expect(mocks.utilsService.sortCollectionWithMergeAlgorithm).toHaveBeenCalledTimes(3);
 			expect(mocks.utilsService.sortCollectionWithMergeAlgorithm).toHaveBeenNthCalledWith(1, Object.values(matchListByTournament['tournament_1']), 'time.uts', order);
 			expect(mocks.utilsService.sortCollectionWithMergeAlgorithm).toHaveBeenNthCalledWith(2, Object.values(matchListByTournament['tournament_2']), 'time.uts', order);
