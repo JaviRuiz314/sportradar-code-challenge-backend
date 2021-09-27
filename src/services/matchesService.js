@@ -23,6 +23,8 @@ async function getMatchesByTournamentId(tournamentsInfoList = []) {
 
 function parseTimeAndDateOfMatches(matchList) {
 	return matchList.map(match => {
+		console.log('MATCH');
+		console.log(match);
 		return {
 			time: {
 				time: match.time.time,
