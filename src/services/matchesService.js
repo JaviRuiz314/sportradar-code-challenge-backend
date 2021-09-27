@@ -23,8 +23,6 @@ async function getMatchesByTournamentId(tournamentsInfoList = []) {
 
 function parseTimeAndDateOfMatches(matchList) {
 	return matchList.map(match => {
-		console.log('MATCH');
-		console.log(match);
 		return {
 			time: {
 				time: match.time.time,
@@ -36,8 +34,7 @@ function parseTimeAndDateOfMatches(matchList) {
 			},
 			score: {
 				away: match.result.away,
-				home: match.result.home,
-				winner: match.result.winner
+				home: match.result.home
 			},
 			events: match.comment
 		}
@@ -60,7 +57,7 @@ async function getMatchesListOrdered(order = utils.ORDER_DESC, limit = 5) {
 
 	Object.keys(matchesListFromDataServer).forEach(tournament => {
 		orderedMatchesByTournament[tournament] = orderMatchesByCriteria(Object.values(matchesListFromDataServer[tournament]), order, limit);
-	})
+	});
 
 	return orderedMatchesByTournament;
 }
