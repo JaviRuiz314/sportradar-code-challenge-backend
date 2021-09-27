@@ -4,10 +4,10 @@ RUN mkdir -p /opt/app
 WORKDIR /opt/app
 
 ARG PORT
-ENV PORT=$PORT
+ENV PORT=4200
 
 COPY . .
 RUN npm install
 
-EXPOSE $PORT
+EXPOSE 4200
 CMD [ "npm" "run" "start" ]
