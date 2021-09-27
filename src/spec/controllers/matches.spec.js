@@ -10,7 +10,7 @@ describe('controller matches', () => {
 	beforeEach(() => {
 		jest.mock('#services/matchesService', () => {
 			return {
-					getMatchesListOrdered: jest.fn()
+					getMatchesListSorted: jest.fn()
 			}
 		});
 
@@ -32,14 +32,14 @@ describe('controller matches', () => {
 				tournamentB: [{ id: 3 }, { id: 4 }, { id: 5 }]
 			};
 
-			mocks.matchesService.getMatchesListOrdered.mockResolvedValue(listOfMatches);
+			mocks.matchesService.getMatchesListSorted.mockResolvedValue(listOfMatches);
 
 			// WHEN
 			await mocks.matchesController.getMatchesFromDataServer(req, res);
 
 			// THEN
-			expect(mocks.matchesService.getMatchesListOrdered).toHaveBeenCalledTimes(1);
-			expect(mocks.matchesService.getMatchesListOrdered).toHaveBeenCalledWith();
+			expect(mocks.matchesService.getMatchesListSorted).toHaveBeenCalledTimes(1);
+			expect(mocks.matchesService.getMatchesListSorted).toHaveBeenCalledWith();
 			expect(res.status).toHaveBeenCalledTimes(1);
 			expect(res.status).toHaveBeenCalledWith(200);
 			expect(send).toHaveBeenCalledTimes(1);
@@ -49,14 +49,14 @@ describe('controller matches', () => {
 			// GIVEN
 			const error = new Error('unexpected error');
 
-			mocks.matchesService.getMatchesListOrdered.mockRejectedValue(error);
+			mocks.matchesService.getMatchesListSorted.mockRejectedValue(error);
 
 			// WHEN
 			await mocks.matchesController.getMatchesFromDataServer(req, res);
 
 			// THEN
-			expect(mocks.matchesService.getMatchesListOrdered).toHaveBeenCalledTimes(1);
-			expect(mocks.matchesService.getMatchesListOrdered).toHaveBeenCalledWith();
+			expect(mocks.matchesService.getMatchesListSorted).toHaveBeenCalledTimes(1);
+			expect(mocks.matchesService.getMatchesListSorted).toHaveBeenCalledWith();
 			expect(res.status).toHaveBeenCalledTimes(1);
 			expect(res.status).toHaveBeenCalledWith(500);
 			expect(send).toHaveBeenCalledTimes(1);

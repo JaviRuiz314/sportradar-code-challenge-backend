@@ -5,7 +5,7 @@ const
 	app = express(),
 	cors = require('cors'),
 	marked = require('marked'),
-	routes = require('./routes'),
+	routes = require('#routes'),
 	fs = require('fs');
 
 	app.use(cors());

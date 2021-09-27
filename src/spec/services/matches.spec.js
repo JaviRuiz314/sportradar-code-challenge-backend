@@ -108,7 +108,7 @@ describe('service matches', () => {
 			mocks.utilsService.sortCollectionWithMergeAlgorithm.mockReturnValueOnce(matchListByTournament['tournament_2']);
 			mocks.utilsService.sortCollectionWithMergeAlgorithm.mockReturnValueOnce(matchListByTournament['tournament_3']);
 			// WHEN
-			const result = await mocks.matchesService.getMatchesListOrdered();
+			const result = await mocks.matchesService.getMatchesListSorted();
 
 			// THEN
 			expect(mocks.tournamentsService.getTournamentInfoList).toHaveBeenCalledTimes(1);
@@ -132,7 +132,7 @@ describe('service matches', () => {
 		mocks.tournamentsService.getTournamentInfoList.mockRejectedValue(error);
 
 		// WHEN
-		await expect(mocks.matchesService.getMatchesListOrdered()).rejects.toThrowError(error);
+		await expect(mocks.matchesService.getMatchesListSorted()).rejects.toThrowError(error);
 
 		// THEN
 		expect(mocks.tournamentsService.getTournamentInfoList).toHaveBeenCalledTimes(1);

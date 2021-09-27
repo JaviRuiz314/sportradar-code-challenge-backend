@@ -4,6 +4,7 @@ module.exports = {
 	moduleNameMapper: {
 		"^#server(.*)$": "<rootDir>/src/server",
 		"^#controllers(.*)$": "<rootDir>/src/controllers$1",
+		"^#routes(.*)$": "<rootDir>/src/routes$1",
 		"^#services(.*)$": "<rootDir>/src/services$1",
 		"^#shared(.*)$": "<rootDir>/src/shared$1"
 	},
