@@ -49,7 +49,7 @@ function orderMatchesByCriteria(matchList, order, limit) {
 	return parsedAndsortedList;
 };
 
-async function getMatchesListOrdered(order = utils.ORDER_DESC, limit = 5) {
+async function getMatchesListSorted(order = utils.ORDER_DESC, limit = 5) {
 	const
 		tournamentsInfoList = await tournamentService.getTournamentInfoList(),
 		matchesListFromDataServer = await getMatchesByTournamentId(tournamentsInfoList),
@@ -62,4 +62,4 @@ async function getMatchesListOrdered(order = utils.ORDER_DESC, limit = 5) {
 	return orderedMatchesByTournament;
 }
 
-module.exports = { getMatchesListOrdered }
+module.exports = { getMatchesListSorted }
