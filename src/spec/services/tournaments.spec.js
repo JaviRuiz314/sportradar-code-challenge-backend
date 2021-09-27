@@ -5,14 +5,14 @@ const
 
 describe('services tournaments', () => {
 	beforeEach(() => {
-		jest.mock('axios', () => {
+		jest.mock('#services/httpRequestService', () => {
 			return {
-				get: jest.fn()
+				createHTTPRequest: jest.fn()
 			}
 		});
 
-		mocks.axios = require('axios');
-		mocks.service = require('#services');
+		mocks.httpRequestService = require('#services/httpRequestService');
+		mocks.tournamentsService = require('#services/tournamentsService');
 	});
 	afterEach(() => {
 		jest.resetAllMocks();
@@ -50,28 +50,28 @@ describe('services tournaments', () => {
 					name: 'tournament_2'
 				}]
 
-			mocks.axios.get.mockResolvedValue(httpResponse);
+			mocks.httpRequestService.createHTTPRequest.mockResolvedValue(httpResponse);
 
 			// WHEN
-			const tournamentIdList = await mocks.service.Tournaments.getTournamentInfoList();
+			const tournamentIdList = await mocks.tournamentsService.getTournamentInfoList();
 
 			// THEN
-			expect(mocks.axios.get).toHaveBeenCalledTimes(1);
-			expect(mocks.axios.get).toHaveBeenCalledWith(utils.TOURNAMENTS_LINK);
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenCalledTimes(1);
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenCalledWith(utils.GET_HTTP_METHOD, utils.TOURNAMENTS_LINK);
 			expect(tournamentIdList).toEqual(parsedResponse);
 		});
 		it('should throw an unexpected error', async () => {
 			// GIVEN
 			const error = new Error('unexpected error');
 
-			mocks.axios.get.mockRejectedValue(error);
+			mocks.httpRequestService.createHTTPRequest.mockRejectedValue(error);
 
 			// WHEN
-			await expect(mocks.service.Tournaments.getTournamentInfoList()).rejects.toThrowError(error);
+			await expect(mocks.tournamentsService.getTournamentInfoList()).rejects.toThrowError(error);
 
 			// THEN
-			expect(mocks.axios.get).toHaveBeenCalledTimes(1);
-			expect(mocks.axios.get).toHaveBeenCalledWith(utils.TOURNAMENTS_LINK);
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenCalledTimes(1);
+			expect(mocks.httpRequestService.createHTTPRequest).toHaveBeenCalledWith(utils.GET_HTTP_METHOD, utils.TOURNAMENTS_LINK);
 		});
 	})
 });

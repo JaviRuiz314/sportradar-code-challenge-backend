@@ -8,7 +8,7 @@ const
 
 async function getTournamentsList() {
 	const
-		tournamentInfo = await httpRequestService.createAHTTPRequest('get', utils.TOURNAMENTS_LINK),
+		tournamentInfo = await httpRequestService.createHTTPRequest(utils.GET_HTTP_METHOD, utils.TOURNAMENTS_LINK),
 		apiData = _.get(tournamentInfo, 'data.doc');
 
 	return _.get(apiData[0], 'data.tournaments');

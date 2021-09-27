@@ -3,11 +3,11 @@
 const axios = require('axios');
 
 
-function createAHTTPRequest(httpMethodmethod, httpUrl) {
+function createHTTPRequest(httpMethod, httpUrl) {
 	return axios({
-		method: httpMethodmethod,
+		method: httpMethod,
 		url: httpUrl
 	  });
 }
 
-module.exports = { createAHTTPRequest }
+module.exports = { createHTTPRequest }

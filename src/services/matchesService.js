@@ -12,7 +12,7 @@ async function getMatchesByTournamentId(tournamentsInfoList = []) {
 
 	await Promise.all(tournamentsInfoList.slice(0).map(async (tournament) => {
 		const
-			matchListInfo = await httpRequestService.createAHTTPRequest('get', utils.MATCHES_LINK(tournament.id)),
+			matchListInfo = await httpRequestService.createHTTPRequest(utils.GET_HTTP_METHOD, utils.MATCHES_LINK(tournament.id)),
 			apiData = _.get(matchListInfo, 'data.doc');
 
 		if (apiData.length) matchesData[tournament.name] = _.get(apiData[0], 'data.matches');
