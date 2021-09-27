@@ -1,7 +1,7 @@
 'use strict';
 
 const
-	Matches = require('./matches'),
+	Matches = require('./matchesService'),
 	Tournaments = require('./tournamentsService'),
 	Utils = require('./utilsService');
 

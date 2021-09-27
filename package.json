@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "jest --coverage --config ./jest.config.json"
+    "test": "jest spec -c jest.config.js"
   },
   "author": "",
   "license": "ISC",

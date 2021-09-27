@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"#services/*": ["./src/services*"],
+			"#controllers/*": ["./src/controllers*"],
+			"#shared/*": ["./src/shared*"],
+			"#server/*": ["./src/server"]
+		}
+	}
+}
