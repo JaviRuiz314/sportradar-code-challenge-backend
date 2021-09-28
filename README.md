@@ -61,6 +61,6 @@ The middleware however, also works on an stand-alone version, to do so, you just
   1. npm install
   2. npm run start
 
-Take into account that, running it on your local machine in this fashion, would require you to create ".dotenv" file on the root directory of the project
+Take into account that, running it on your local machine in this fashion, would require you to create ".env" file on the root directory of the project
 so you can set the environment variable "PORT". Then the middleware will be listening on that port so you can use your favourite API client to send requests,
 or your browser.
